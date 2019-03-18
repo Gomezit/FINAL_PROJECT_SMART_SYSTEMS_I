@@ -6,30 +6,24 @@
 package final_project_smart_systems_i;
 
 import java.awt.FileDialog;
-import java.awt.Frame;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 
 /**
  *
  * @author andres
  */
-public class Main extends javax.swing.JFrame {
+public class BoardGame extends javax.swing.JFrame {
 
     private FileDialog dialog;
+    private FileClass fileClass;
+    private Matrix matrix;
 
     /**
      * Creates new form Main
      */
-    public Main() {
+    public BoardGame() {
         initComponents();
+        matrix = new Matrix();
     }
 
     /**
@@ -43,9 +37,11 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaBoard = new javax.swing.JTextArea();
+        jButtonIndirect = new javax.swing.JButton();
+        jButtonDirect = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemChooseFile = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,19 +50,28 @@ public class Main extends javax.swing.JFrame {
         jTextAreaBoard.setRows(5);
         jScrollPane1.setViewportView(jTextAreaBoard);
 
-        jMenu1.setText("File");
-
-        jMenuItem1.setText("Choose file");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonIndirect.setText("Indirect");
+        jButtonIndirect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jButtonIndirectActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+
+        jButtonDirect.setText("Direct");
+
+        jMenu1.setText("File");
+
+        jMenuItemChooseFile.setText("Choose file");
+        jMenuItemChooseFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemChooseFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemChooseFile);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Options");
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -77,30 +82,52 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonIndirect, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDirect, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonIndirect)
+                    .addComponent(jButtonDirect))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemChooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChooseFileActionPerformed
 
         dialog = new FileDialog(this, "Select file to open", FileDialog.LOAD);
         dialog.setVisible(true);
         File file = new File(dialog.getFiles()[0].getAbsolutePath());
 
-        jTextAreaBoard.setText(readFile(file));
+        fileClass = new FileClass();
+        fileClass.readFile(file);
+
+        jTextAreaBoard.setText(fileClass.getOutputRead());
 
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemChooseFileActionPerformed
+
+    private void jButtonIndirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndirectActionPerformed
+
+        String clearText = fileClass.clearText();
+
+        matrix.createMatrixIndirectVariant(clearText);
+        jTextAreaBoard.setText(matrix.showMatrix());
+
+    }//GEN-LAST:event_jButtonIndirectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,20 +146,21 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Main jframe = new Main();
+                BoardGame jframe = new BoardGame();
                 jframe.setLocationRelativeTo(null);
                 jframe.setTitle("Nanogram");
                 jframe.setVisible(true);
@@ -141,42 +169,14 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDirect;
+    private javax.swing.JButton jButtonIndirect;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemChooseFile;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaBoard;
     // End of variables declaration//GEN-END:variables
 
-    private String readFile(File file) {
-
-        String output = "";
-
-        BufferedReader br = null;
-        FileReader fr = null;
-
-        try {
-
-            fr = new FileReader(file);
-            br = new BufferedReader(fr);
-
-            String sCurrentLine;
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                output += sCurrentLine + "\n";
-
-            }
-
-            br.close();
-            fr.close();
-
-        } catch (IOException e) {
-
-            e.getMessage();
-
-        }
-
-        return output;
-    }
 }
