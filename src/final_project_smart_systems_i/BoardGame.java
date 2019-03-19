@@ -7,6 +7,7 @@ package final_project_smart_systems_i;
 
 import java.awt.FileDialog;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,7 @@ public class BoardGame extends javax.swing.JFrame {
 
     private FileDialog dialog;
     private FileClass fileClass;
+    private TextManagement textManagement;
     private Matrix matrix;
 
     /**
@@ -24,6 +26,7 @@ public class BoardGame extends javax.swing.JFrame {
     public BoardGame() {
         initComponents();
         matrix = new Matrix();
+        textManagement = new TextManagement();
     }
 
     /**
@@ -58,6 +61,11 @@ public class BoardGame extends javax.swing.JFrame {
         });
 
         jButtonDirect.setText("Direct");
+        jButtonDirect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDirectActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -122,12 +130,27 @@ public class BoardGame extends javax.swing.JFrame {
 
     private void jButtonIndirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndirectActionPerformed
 
-        String clearText = fileClass.clearText();
+        String clearText = textManagement.clearTextIndirectVariant(jTextAreaBoard.getText());
 
         matrix.createMatrixIndirectVariant(clearText);
         jTextAreaBoard.setText(matrix.showMatrix());
 
     }//GEN-LAST:event_jButtonIndirectActionPerformed
+
+    private void jButtonDirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDirectActionPerformed
+
+        ArrayList<String> clearConstrains = textManagement.clearTextDirectVariant(jTextAreaBoard.getText());
+        String m = "";
+
+        for (String clearConstrain : clearConstrains) {
+
+            m += clearConstrain + "\n";
+
+        }
+
+        jTextAreaBoard.setText(m);
+
+    }//GEN-LAST:event_jButtonDirectActionPerformed
 
     /**
      * @param args the command line arguments

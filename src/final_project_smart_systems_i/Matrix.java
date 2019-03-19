@@ -5,6 +5,8 @@
  */
 package final_project_smart_systems_i;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author andres
@@ -57,20 +59,6 @@ public class Matrix {
         return stringMatrix;
     }
 
-//    public char[][] textToMatrix(String text) {
-//
-//        if (text.contains(".")) {
-//
-//            System.out.println("tengo un punto");
-//        }
-//
-//        if (!text.contains(".")) {
-//
-//            char[] stringToCharArray = text.toCharArray();
-//
-//        }
-//
-//        return null;
-//
-//    }
+    public void createMatrixDirectVariant(ArrayList<String> clearConstrains) {
+    }
 }

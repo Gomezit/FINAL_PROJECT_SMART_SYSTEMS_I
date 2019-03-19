@@ -56,15 +56,6 @@ public class FileClass {
         return this.outputRead;
     }
 
-    public String clearText() {
-
-        String normalized = this.outputRead.trim();
-        String replace = normalized.replace("#", "");
-        String replaceAll = replace.replaceAll("\\s", "");
-
-        this.outputRead = replaceAll;
-
-        return this.outputRead;
-    }
+    
 
 }
