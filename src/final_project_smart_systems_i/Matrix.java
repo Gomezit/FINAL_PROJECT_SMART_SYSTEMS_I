@@ -13,44 +13,18 @@ import java.util.ArrayList;
  */
 public class Matrix {
 
-    private char[][] matrix;
-
     public Matrix() {
-
     }
 
-    public char[][] getMatrix() {
-        return matrix;
-    }
-
-    public void setMatrix(char[][] matrix) {
-        this.matrix = matrix;
-    }
-
-    public void createMatrixIndirectVariant(String text) {
-
-        char[] stringToCharArray = text.toCharArray();
-        int n = (int) Math.sqrt(stringToCharArray.length);
-        int z = 0;
-        this.matrix = new char[n][n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                this.matrix[i][j] = stringToCharArray[z];
-                z++;
-            }
-        }
-    }
-
-    public String showMatrix() {
+    public String showMatrix(char[][] matrix) {
 
         String stringMatrix = "";
-        int n = this.matrix.length;
+        int n = matrix.length;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
 
-                stringMatrix += this.matrix[i][j] + " ";
+                stringMatrix += matrix[i][j] + " ";
             }
 
             stringMatrix += "\n";
@@ -59,6 +33,4 @@ public class Matrix {
         return stringMatrix;
     }
 
-    public void createMatrixDirectVariant(ArrayList<String> clearConstrains) {
-    }
 }

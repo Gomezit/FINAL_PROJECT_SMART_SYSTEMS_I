@@ -5,6 +5,8 @@
  */
 package final_project_smart_systems_i;
 
+import agents.UserAgent;
+import jade.gui.GuiEvent;
 import java.awt.FileDialog;
 import java.io.File;
 import java.util.ArrayList;
@@ -15,18 +17,28 @@ import java.util.ArrayList;
  */
 public class BoardGame extends javax.swing.JFrame {
 
+    UserAgent userAgent;
+
     private FileDialog dialog;
     private FileClass fileClass;
     private TextManagement textManagement;
     private Matrix matrix;
+    private ResolveIndirectVariant indirectVariant;
 
     /**
      * Creates new form Main
+     *
+     * @param userAgent
+     * @param name
      */
-    public BoardGame() {
+    public BoardGame(UserAgent userAgent, String name) {
+
         initComponents();
         matrix = new Matrix();
         textManagement = new TextManagement();
+        this.userAgent = userAgent;
+        this.jLabelNameAgent.setText("Agent: " + name);
+
     }
 
     /**
@@ -42,6 +54,7 @@ public class BoardGame extends javax.swing.JFrame {
         jTextAreaBoard = new javax.swing.JTextArea();
         jButtonIndirect = new javax.swing.JButton();
         jButtonDirect = new javax.swing.JButton();
+        jLabelNameAgent = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemChooseFile = new javax.swing.JMenuItem();
@@ -66,6 +79,8 @@ public class BoardGame extends javax.swing.JFrame {
                 jButtonDirectActionPerformed(evt);
             }
         });
+
+        jLabelNameAgent.setText("jLabel1");
 
         jMenu1.setText("File");
 
@@ -96,13 +111,18 @@ public class BoardGame extends javax.swing.JFrame {
                         .addComponent(jButtonIndirect, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonDirect, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabelNameAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(9, 9, 9)
+                .addComponent(jLabelNameAgent)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -132,8 +152,12 @@ public class BoardGame extends javax.swing.JFrame {
 
         String clearText = textManagement.clearTextIndirectVariant(jTextAreaBoard.getText());
 
-        matrix.createMatrixIndirectVariant(clearText);
-        jTextAreaBoard.setText(matrix.showMatrix());
+        GuiEvent event = new GuiEvent(this, 0);
+        event.addParameter("ag2");
+        event.addParameter(clearText);
+        userAgent.postGuiEvent(event);
+                
+        
 
     }//GEN-LAST:event_jButtonIndirectActionPerformed
 
@@ -156,50 +180,19 @@ public class BoardGame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BoardGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                BoardGame jframe = new BoardGame();
-                jframe.setLocationRelativeTo(null);
-                jframe.setTitle("Nanogram");
-                jframe.setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDirect;
     private javax.swing.JButton jButtonIndirect;
+    private javax.swing.JLabel jLabelNameAgent;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemChooseFile;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaBoard;
+    public javax.swing.JTextArea jTextAreaBoard;
     // End of variables declaration//GEN-END:variables
 
 }
