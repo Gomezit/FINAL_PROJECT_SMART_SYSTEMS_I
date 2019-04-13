@@ -31,7 +31,7 @@ public class SolveIndirect extends CyclicBehaviour {
         if (msg != null) {
 
             resolve.createMatrixIndirectVariant(msg.getContent());
-            //fileClass.writeFile(msg.getContent());
+            fileClass.writeFile(msg.getContent());
             System.out.println("the Game for indirect variant was resolve");
             
         }

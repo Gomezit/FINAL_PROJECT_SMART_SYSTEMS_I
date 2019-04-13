@@ -38,11 +38,25 @@ public class ResolveIndirectVariant {
     
     private LinkedList<String> createConstraints(){
         
+        LinkedList<String> constrains = new LinkedList<>();
         
+        for (int i = 0; i < this.matrix.length; i++) {
+            for (int j = 0; j < this.matrix.length; j++) {
+                
+                if(this.matrix[i][j]==1){
+                    
+                }
+            }
+        }
         
         
         return null;
     }
+    
+    
+    
+    
+   
     
     
     
