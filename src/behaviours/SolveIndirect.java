@@ -5,12 +5,11 @@
  */
 package behaviours;
 
-import agents.UserAgent;
 import final_project_smart_systems_i.FileClass;
 import final_project_smart_systems_i.ResolveIndirectVariant;
-import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,12 +29,12 @@ public class SolveIndirect extends CyclicBehaviour {
 
         if (msg != null) {
 
-            resolve.createMatrixIndirectVariant(msg.getContent());
+            resolve.createMatrixIndirectVariant(msg.getContent());   
+            resolve.createConstraints();
             fileClass.writeFile(msg.getContent());
-            System.out.println("the Game for indirect variant was resolve");
+            JOptionPane.showMessageDialog(null,"The nonogram on indirect variant was resolve");
+            
             
         }
-
     }
-
 }

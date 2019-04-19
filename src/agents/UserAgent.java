@@ -6,7 +6,6 @@
 package agents;
 
 
-import behaviours.SolveIndirect;
 import final_project_smart_systems_i.BoardGame;
 import jade.core.AID;
 import jade.domain.DFService;
@@ -65,7 +64,7 @@ public class UserAgent extends GuiAgent {
 
         try {
             DFAgentDescription[] result = DFService.search(this, dfd);
-            System.out.println("All found angents" + result.length);
+            System.out.println("All found agents" + result.length);
 
             for (int i = 0; i < result.length; i++) {
 
@@ -74,7 +73,8 @@ public class UserAgent extends GuiAgent {
                 while (iter.hasNext()) {
 
                     ServiceDescription sd = (ServiceDescription) iter.next();
-                    if (sd.getName().equalsIgnoreCase("ResolveNonograms")) {
+                    if (sd.getName().equalsIgnoreCase("ResolveNonogramsIndirectVariant") || 
+                            sd.getName().equalsIgnoreCase("ResolveNonogramsDirectVariant")) {
 
                         namesAgents.add(result[i].getName().getLocalName());
 

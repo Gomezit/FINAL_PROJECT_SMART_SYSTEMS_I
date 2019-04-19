@@ -38,6 +38,7 @@ public class BoardGame extends javax.swing.JFrame {
         textManagement = new TextManagement();
         this.userAgent = userAgent;
         this.jLabelNameAgent.setText("Agent: " + name);
+        this.setTitle("Nonogram - Japan puzzle");
 
     }
 
@@ -58,7 +59,6 @@ public class BoardGame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemChooseFile = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,9 +93,6 @@ public class BoardGame extends javax.swing.JFrame {
         jMenu1.add(jMenuItemChooseFile);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Options");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -188,7 +185,6 @@ public class BoardGame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonIndirect;
     private javax.swing.JLabel jLabelNameAgent;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemChooseFile;
     private javax.swing.JScrollPane jScrollPane1;

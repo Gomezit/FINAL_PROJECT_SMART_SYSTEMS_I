@@ -18,6 +18,7 @@ public class ResolveIndirectVariant {
     public ResolveIndirectVariant() {
     }
 
+    //Create matrix from text.
     public char[][] createMatrixIndirectVariant(String text) {
 
         char[] stringToCharArray = text.toCharArray();
@@ -36,29 +37,58 @@ public class ResolveIndirectVariant {
         return this.matrix;
     }
     
-    private LinkedList<String> createConstraints(){
+    
+    //Create rows and columns constraints from matrix.
+    public LinkedList<String> createConstraints(){
         
         LinkedList<String> constrains = new LinkedList<>();
         
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix.length; j++) {
-                
-                if(this.matrix[i][j]==1){
-                    
-                }
-            }
-        }
-        
-        
-        return null;
-    }
-    
-    
-    
-    
-   
-    
-    
-    
+        //Init count and references constrains for each row and colum.
+        int contSequencesRow = 0;
+        int contSequencesColumn = 0;
+        String constrainsByRows = "Rows constrains ";
+        String constrainsByColumns = "Columns constrains ";
 
+        
+                
+        for(int i = 0; i < this.matrix.length; i++) {
+            
+            contSequencesRow=0;
+            contSequencesColumn=0;
+            constrainsByRows = "Rows constrains ";
+            constrainsByColumns = "Columns constrains ";
+            boolean flagColumnSequence = false;
+            boolean flagRowSequence = false;
+            
+            int j = 0;            
+            for ( ;j < this.matrix.length; j++) {                
+                
+                if(this.matrix[i][j] == '1'){
+                    
+                    contSequencesRow++;
+                    
+                    //Row constraints                 
+                    while(this.matrix[i][j+1] == '1'){
+                            
+                            contSequencesRow++;
+                            j++;                      
+
+                    }
+                    
+                    constrainsByRows += contSequencesRow; 
+                }
+                contSequencesRow = 0;
+                               
+            }
+            
+                            
+        constrains.add(constrainsByRows+"\n");
+        constrains.add(constrainsByColumns+"\n");  
+        
+        }       
+        
+        System.out.println(constrains);
+        
+        return constrains;                
+    }
 }
