@@ -29,9 +29,10 @@ public class SolveIndirect extends CyclicBehaviour {
 
         if (msg != null) {
 
-            resolve.createMatrixIndirectVariant(msg.getContent());   
-            resolve.createConstraints();
-            fileClass.writeFile(msg.getContent());
+            resolve.createMatrixIndirectVariant(msg.getContent()); 
+            System.out.println(resolve.createColumnsConstraints());
+            System.out.println(resolve.createRowsConstraints());            
+            fileClass.writeFile(resolve.createColumnsConstraints().toString() + "\n" + resolve.createRowsConstraints().toString());
             JOptionPane.showMessageDialog(null,"The nonogram on indirect variant was resolve");
             
             

@@ -24,7 +24,7 @@ public class ResolveIndirectVariant {
         char[] stringToCharArray = text.toCharArray();
         int n = (int) Math.sqrt(stringToCharArray.length);
         int z = 0;
-        this.matrix = new char[n][n];
+        this.matrix = new char[n+1][n+1];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -34,41 +34,48 @@ public class ResolveIndirectVariant {
             }
         }
         
+        createArtificialRowColumn();
+                
         return this.matrix;
     }
     
     
-    //Create rows and columns constraints from matrix.
-    public LinkedList<String> createConstraints(){
+    private void createArtificialRowColumn(){
+        
+        for (int i = 0; i < this.matrix.length; i++) {            
+                
+                this.matrix[i][this.matrix.length-1] = 0;
+                this.matrix[this.matrix.length-1][i] = 0;            
+        }       
+        
+        
+    }
+    
+        
+    
+    //Create rows constraints from matrix.
+    public LinkedList<String> createRowsConstraints(){
         
         LinkedList<String> constrains = new LinkedList<>();
         
-        //Init count and references constrains for each row and colum.
+        //Init count and references constrains for each row.
         int contSequencesRow = 0;
-        int contSequencesColumn = 0;
-        String constrainsByRows = "Rows constrains ";
-        String constrainsByColumns = "Columns constrains ";
-
-        
+        String constrainsByRows = "";
                 
-        for(int i = 0; i < this.matrix.length; i++) {
+        for(int i = 0; i < this.matrix.length-1 ; i++) {
             
             contSequencesRow=0;
-            contSequencesColumn=0;
-            constrainsByRows = "Rows constrains ";
-            constrainsByColumns = "Columns constrains ";
-            boolean flagColumnSequence = false;
-            boolean flagRowSequence = false;
+            constrainsByRows = "";
             
+            //Row constraints 
             int j = 0;            
-            for ( ;j < this.matrix.length; j++) {                
+            for ( ;j < this.matrix.length-1; j++) {                
                 
                 if(this.matrix[i][j] == '1'){
                     
-                    contSequencesRow++;
-                    
-                    //Row constraints                 
-                    while(this.matrix[i][j+1] == '1'){
+                    contSequencesRow++;                    
+                                    
+                    while(this.matrix[i][j+1] == '1' ){
                             
                             contSequencesRow++;
                             j++;                      
@@ -77,18 +84,62 @@ public class ResolveIndirectVariant {
                     
                     constrainsByRows += contSequencesRow; 
                 }
+                
                 contSequencesRow = 0;
                                
-            }
+            }           
             
                             
         constrains.add(constrainsByRows+"\n");
-        constrains.add(constrainsByColumns+"\n");  
         
         }       
         
-        System.out.println(constrains);
+        constrains.addFirst("Rows constrains"+"\n");
+        return constrains;                
+    }
+    
+    
+    //Create rows constraints from matrix.
+    public LinkedList<String> createColumnsConstraints(){
         
+        LinkedList<String> constrains = new LinkedList<>();
+        
+        //Init count and references constrains for each row.
+        int contSequencesColumn = 0;
+        String constrainsByColumns = "";
+                
+        for(int i = 0; i < this.matrix.length-1; i++) {
+            
+            contSequencesColumn=0;
+            constrainsByColumns = "";
+            
+            //Columns constraints 
+            int j = 0;            
+            for ( ;j < this.matrix.length-1; j++) {   
+             
+                
+                if(this.matrix[j][i] == '1' ){
+                    
+                    contSequencesColumn++;                   
+                    
+                    while(this.matrix[j+1][i] == '1'){
+                            
+                            contSequencesColumn++;
+                            j++;                      
+
+                    }
+                   
+                    constrainsByColumns += contSequencesColumn; 
+                }
+                
+                contSequencesColumn = 0;                               
+            }
+                            
+        constrains.add(constrainsByColumns);
+        
+        }       
+        
+        constrains.addFirst("Columns constrains");
         return constrains;                
     }
 }
