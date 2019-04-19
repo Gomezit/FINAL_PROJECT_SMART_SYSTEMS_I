@@ -6,6 +6,7 @@
 package behaviours;
 
 import final_project_smart_systems_i.FileClass;
+import final_project_smart_systems_i.ResolveDirectVariant;
 import final_project_smart_systems_i.ResolveIndirectVariant;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -15,27 +16,29 @@ import javax.swing.JOptionPane;
  *
  * @author andres
  */
-public class SolveIndirect extends CyclicBehaviour {
-
+public class SolveDirect extends CyclicBehaviour{
+    
+    
     FileClass fileClass;
-    ResolveIndirectVariant resolve;
+    ResolveDirectVariant resolve;
 
     @Override
     public void action() {
 
         fileClass = new FileClass();
         ACLMessage msg = this.myAgent.receive();
-        resolve = new ResolveIndirectVariant();
+        resolve = new ResolveDirectVariant();
 
         if (msg != null) {
 
-            resolve.createMatrixIndirectVariant(msg.getContent()); 
-            System.out.println(resolve.createColumnsConstraints());
-            System.out.println(resolve.createRowsConstraints());            
-            fileClass.writeFile(resolve.createColumnsConstraints().toString() + "\n" + resolve.createRowsConstraints().toString());
-            JOptionPane.showMessageDialog(null,"The nonogram on indirect variant was resolve.");
+//            resolve.createMatrixIndirectVariant(msg.getContent()); 
+//            System.out.println(resolve.createColumnsConstraints());
+//            System.out.println(resolve.createRowsConstraints());            
+//            fileClass.writeFile(resolve.createColumnsConstraints().toString() + "\n" + resolve.createRowsConstraints().toString());
+            JOptionPane.showMessageDialog(null,"The nonogram on direct variant was resolve.");
             
             
         }
     }
+    
 }

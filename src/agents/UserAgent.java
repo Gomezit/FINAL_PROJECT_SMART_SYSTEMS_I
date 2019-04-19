@@ -39,7 +39,21 @@ public class UserAgent extends GuiAgent {
             msg.setContent((String) ge.getParameter(1));
             this.send(msg);
 
-        }       
+        }    
+        
+        //Direct
+        if (ge.getType() == 1) {
+            
+            
+            AID id = new AID((String) ge.getParameter(0), AID.ISLOCALNAME);
+            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+
+            msg.addReceiver(id);
+
+            msg.setContent((String)ge.getParameter(1));
+            this.send(msg);
+
+        }
         
     }
     
