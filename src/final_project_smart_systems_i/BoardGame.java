@@ -9,7 +9,6 @@ import agents.UserAgent;
 import jade.gui.GuiEvent;
 import java.awt.FileDialog;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  *
@@ -22,7 +21,6 @@ public class BoardGame extends javax.swing.JFrame {
     private FileDialog dialog;
     private FileClass fileClass;
     private TextManagement textManagement;
-    private Matrix matrix;
     private ResolveIndirectVariant indirectVariant;
 
     /**
@@ -34,7 +32,6 @@ public class BoardGame extends javax.swing.JFrame {
     public BoardGame(UserAgent userAgent, String name) {
 
         initComponents();
-        matrix = new Matrix();
         textManagement = new TextManagement();
         this.userAgent = userAgent;
         this.jLabelNameAgent.setText("Agent: " + name);
