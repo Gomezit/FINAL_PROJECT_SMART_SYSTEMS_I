@@ -30,13 +30,9 @@ public class SolveDirect extends CyclicBehaviour{
         resolve = new ResolveDirectVariant();
 
         if (msg != null) {
-
-//            resolve.createMatrixIndirectVariant(msg.getContent()); 
-//            System.out.println(resolve.createColumnsConstraints());
-//            System.out.println(resolve.createRowsConstraints());            
-//            fileClass.writeFile(resolve.createColumnsConstraints().toString() + "\n" + resolve.createRowsConstraints().toString());
-            JOptionPane.showMessageDialog(null,"The nonogram on direct variant was resolve.");
-            
+             
+            resolve.createMatrixDirectVariant(msg.getContent());
+            JOptionPane.showMessageDialog(null,"The nonogram on direct variant was resolve.");            
             
         }
     }

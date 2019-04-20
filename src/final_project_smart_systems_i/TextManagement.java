@@ -25,21 +25,21 @@ public class TextManagement {
         return replaceAll;
     }
 
-    public ArrayList<String> clearTextDirectVariant(String text) {
+    public String clearTextDirectVariant(String text) {
 
         String[] constrains = text.split("\n");
-        ArrayList<String> constrainsCleaned = new ArrayList<>();
+        String constrainsCleanedString = "";
 
         for (String constrain : constrains) {
 
             if (!constrain.contains("#") && !constrain.trim().isEmpty()) {
 
-                constrainsCleaned.add(constrain);
-
+                constrainsCleanedString += constrain+"\n";
+                
             }
         }
 
-        return constrainsCleaned;
+        return constrainsCleanedString;
 
     }
 

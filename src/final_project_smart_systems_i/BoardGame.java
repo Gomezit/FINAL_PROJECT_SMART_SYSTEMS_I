@@ -159,22 +159,15 @@ public class BoardGame extends javax.swing.JFrame {
 
     private void jButtonDirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDirectActionPerformed
 
-        ArrayList<String> clearConstrains = textManagement.clearTextDirectVariant(jTextAreaBoard.getText());
-                
-        String m = "";
-
-        for (String clearConstrain : clearConstrains) {
-
-            m += clearConstrain + "\n";
-
-        }
+        String clearConstrains = textManagement.clearTextDirectVariant(jTextAreaBoard.getText());
+        
         
         GuiEvent event = new GuiEvent(this, 1);
         event.addParameter("ag3");
-        event.addParameter(m);
+        event.addParameter(clearConstrains);
         userAgent.postGuiEvent(event);
 
-        jTextAreaBoard.setText(m);
+        jTextAreaBoard.setText(clearConstrains);
 
     }//GEN-LAST:event_jButtonDirectActionPerformed
 
