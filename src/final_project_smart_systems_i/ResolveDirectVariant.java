@@ -40,7 +40,7 @@ public class ResolveDirectVariant {
                         
             for (int j = 0; j < n; j++) {
                 
-                this.matrix[i][j] = 'x';
+                this.matrix[i][j] = ' ';
                                 
             }
         }
@@ -95,7 +95,33 @@ public class ResolveDirectVariant {
         
         completeFills();   
         completefillsWhiteSpacesDefined();
+        //completePartialsFills();
         
+    }
+    
+    //Complete partials fills
+    private void completePartialsFills(){
+        
+        int L;
+                        
+        for (int i = 0; i < this.matrix.length; i++) {
+            
+            if(this.rowsConstraints.get(i).length() == 1 && !this.rowsConstraints.get(i).equalsIgnoreCase(".")){
+                
+                L = this.matrix.length - (Integer.parseInt(this.rowsConstraints.get(i)) + (this.rowsConstraints.get(i).length()-1));
+            
+                int NiLessL = Integer.parseInt(this.rowsConstraints.get(i)) - L; 
+                
+                if(NiLessL > 0){
+                    
+                    System.out.println("L " + i);
+                    
+                    
+                }
+            
+            }
+            
+        }
     }
     
     //Complete fill with white spaces defined
@@ -127,9 +153,9 @@ public class ResolveDirectVariant {
                             j++;                        
                             actualConstraint--;
 
-                            if(actualConstraint == 0 && j < this.matrix.length ){
+                            if(actualConstraint == 0 && j < this.matrix.length && this.matrix[i][j] == ' ' ){
 
-                                this.matrix[i][j] = '0';                         
+                                this.matrix[i][j] = 'x';                         
 
                             }                        
                         }    
@@ -159,9 +185,9 @@ public class ResolveDirectVariant {
                             j++;                        
                             actualConstraint--;
 
-                            if(actualConstraint == 0  && j < this.matrix.length){
+                            if(actualConstraint == 0  && j < this.matrix.length && this.matrix[j][i] == ' '){
 
-                                this.matrix[j][i] = '0';                    
+                                this.matrix[j][i] = 'x';                    
                                  
                             }
                         }
@@ -182,8 +208,7 @@ public class ResolveDirectVariant {
             sum += Integer.parseInt(constraints[i]);
             
         }
-        
-        System.out.println("");
+               
         
         if(sum + (constraints.length-1) == this.matrix.length){
             
@@ -205,8 +230,8 @@ public class ResolveDirectVariant {
                  System.out.println("Row constraint contain a dot(.) at" + i);
                     for (int j = 0; j < this.matrix.length; j++) {
                         
-                        if(this.matrix[i][j] == 'x'){
-                            this.matrix[i][j] = '0';
+                        if(this.matrix[i][j] == ' '){
+                            this.matrix[i][j] = 'x';
                         }                        
                     }
             }
@@ -215,8 +240,8 @@ public class ResolveDirectVariant {
                 
                  System.out.println("Columns constraint contain a dot(.) at" + i);
                     for (int j = 0; j < this.matrix.length; j++) {
-                         if(this.matrix[j][i] == 'x'){
-                            this.matrix[j][j] = '0';
+                         if(this.matrix[j][i] == ' '){
+                            this.matrix[j][i] = 'x';
                         }
                     }
             }
@@ -228,7 +253,7 @@ public class ResolveDirectVariant {
                     System.out.println("Row constraint equal to length matrix at " + i);
                     
                     for (int j = 0; j < this.matrix.length; j++) {
-                         if(this.matrix[i][j] == 'x'){
+                         if(this.matrix[i][j] == ' '){
                             this.matrix[i][j] = '1';
                         }
                     }                   
@@ -240,15 +265,12 @@ public class ResolveDirectVariant {
                 if(Integer.parseInt(this.columnsConstraints.get(i)) == this.matrix.length){
                     System.out.println("Column constraint equal to length matrix at " + i);
                     for (int j = 0; j < this.matrix.length; j++) {
-                        if(this.matrix[j][i] == 'x'){
+                        if(this.matrix[j][i] == ' '){
                             this.matrix[j][i] = '1';
                         }
                     }
                 }
-            }
-            
+            }            
         }
     }
-
-
 }

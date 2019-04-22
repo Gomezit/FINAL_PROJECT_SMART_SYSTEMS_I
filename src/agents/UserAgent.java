@@ -38,6 +38,10 @@ public class UserAgent extends GuiAgent {
 
             msg.setContent((String) ge.getParameter(1));
             this.send(msg);
+            
+            ACLMessage request = this.blockingReceive();
+            String boardText = boardGame.jTextAreaBoard.getText()+"\n\n"+ request.getContent();
+            boardGame.jTextAreaBoard.setText(boardText);
 
         }    
         
@@ -52,6 +56,10 @@ public class UserAgent extends GuiAgent {
 
             msg.setContent((String)ge.getParameter(1));
             this.send(msg);
+            
+            ACLMessage request = this.blockingReceive();
+            String boardText = boardGame.jTextAreaBoard.getText()+"\n\n"+ request.getContent();
+            boardGame.jTextAreaBoard.setText(boardText);
 
         }
         
