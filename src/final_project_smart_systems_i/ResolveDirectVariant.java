@@ -49,6 +49,28 @@ public class ResolveDirectVariant {
         
         return this.matrix;
     }
+    
+    private char[] getArrayFromRowColumn(int indexColumnORrow, char ColumnORrow ){
+        
+                
+        int n = this.matrix.length;
+        char[] segment = new char[n];
+        
+        if(ColumnORrow == 'C'){
+            for (int i = 0; i < n; i++) {
+                           
+                segment[i] = this.matrix[i][indexColumnORrow]; 
+            }
+        }
+        
+        if(ColumnORrow == 'R'){
+            for (int i = 0; i < n; i++) {
+                segment[i] = this.matrix[indexColumnORrow][i]; 
+            }
+        }
+        
+        return segment;
+    }
 
     private void divideColumnsAndRowsConstraints(String[] constrains) {
         
@@ -84,10 +106,12 @@ public class ResolveDirectVariant {
       
     public boolean resolveNonogram(){
         
-        preProcessing();
+        preProcessing();        
         
-        return false;
+         //   System.out.println( getArrayFromRowColumn(2, 'C')[i]);
         
+        
+        return false;        
     }
     
     //The initial solution that determine complete fill, complete fills with white spaces defined and parcial fill. 

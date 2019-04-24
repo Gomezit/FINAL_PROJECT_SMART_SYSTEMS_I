@@ -5,8 +5,6 @@
  */
 package final_project_smart_systems_i;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author andres
