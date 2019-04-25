@@ -6,7 +6,7 @@
 package final_project_smart_systems_i;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.List;
 
 /**
  *
@@ -15,16 +15,80 @@ import javax.swing.JOptionPane;
 public class ResolveDirectVariant {
     
     private char[][] matrix;
+    private char[][] auxMatrix;
     private ArrayList<String> rowsConstraints;
     private ArrayList<String> columnsConstraints;
+    private int indexTheMostChanged;
+    List<List<Integer>> rowConstraints = new ArrayList<>();
+    List<List<Integer>> columnConstraints = new ArrayList<>();
+    public List<String> lines = new ArrayList<>();
 
     public ResolveDirectVariant() {
         
         this.rowsConstraints =  new ArrayList<>();
         this.columnsConstraints =  new ArrayList<>();
+        
 
     }
     
+    
+
+    public char[][] getMatrix() {
+        return matrix;
+    }
+    
+   
+    public void resolve(String text){
+        
+       
+        
+        String[] constrains = text.split("\n");
+        
+        for (int i = 0; constrains.length < 10; i++) {
+            
+            
+            lines.add(constrains[i]);
+            System.out.println("OOO" + constrains[i]);
+        }
+        
+        int N = lines.size() / 2;
+        
+        
+        for (int i = 0; i < N; i++) {
+            String line = lines.get(i);
+            String parts[] = line.split("-");
+            List<Integer> constraints = new ArrayList<>();
+            for (int j = 0; j < parts.length; j++) {
+                constraints.add(Integer.parseInt(parts[j]));
+            }
+            rowConstraints.add(constraints);
+        }
+        
+        for (int i = N; i < lines.size(); i++) {
+            String line = lines.get(i);
+            String parts[] = line.split("-");
+            List<Integer> constraints = new ArrayList<>();
+            for (int j = 0; j < parts.length; j++) {
+                constraints.add(Integer.parseInt(parts[j]));
+            }
+            columnConstraints.add(constraints);
+        }
+    
+            
+            SolveNonogram solve = new SolveNonogram(N, columnConstraints, rowConstraints);
+            System.out.println("Num de soluciones encontradas: " + solve.solutions.size());
+
+            for (int i = 0; i < solve.solutions.size(); i++) {
+                for (String s : solve.solutions.get(i)) {
+                    System.out.println(s);
+                }
+                System.out.println("-------------------------------------");
+            }
+        }
+        
+       
+    
+        
      //Create matrix from text.
     public char[][] createMatrixDirectVariant(String text) {
         
@@ -50,6 +114,8 @@ public class ResolveDirectVariant {
         return this.matrix;
     }
     
+    
+    
     private char[] getArrayFromRowColumn(int indexColumnORrow, char ColumnORrow ){
         
                 
@@ -65,6 +131,7 @@ public class ResolveDirectVariant {
         
         if(ColumnORrow == 'R'){
             for (int i = 0; i < n; i++) {
+                
                 segment[i] = this.matrix[indexColumnORrow][i]; 
             }
         }
@@ -86,6 +153,8 @@ public class ResolveDirectVariant {
     }
     
     
+    
+    
     public String showMatrix() {
 
         String stringMatrix = "";
@@ -103,12 +172,16 @@ public class ResolveDirectVariant {
         return stringMatrix;
     }
     
+    
+    
       
     public boolean resolveNonogram(){
         
-        preProcessing();        
+        preProcessing();  
         
-         //   System.out.println( getArrayFromRowColumn(2, 'C')[i]);
+        char[] x = getArrayFromRowColumn(1, 'R');
+        
+             
         
         
         return false;        
@@ -138,13 +211,10 @@ public class ResolveDirectVariant {
                 
                 if(NiLessL > 0){
                     
-                    System.out.println("L " + i);
+                    System.out.println("L " + i);                    
                     
-                    
-                }
-            
-            }
-            
+                }            
+            }            
         }
     }
     
@@ -297,4 +367,9 @@ public class ResolveDirectVariant {
             }            
         }
     }
+    
+    
+    
+    
+    
 }

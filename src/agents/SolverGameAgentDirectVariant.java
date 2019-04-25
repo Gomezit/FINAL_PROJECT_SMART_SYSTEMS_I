@@ -23,7 +23,7 @@ public class SolverGameAgentDirectVariant extends Agent {
      // ConfiguraciĂłn 
     @Override
     protected void setup() {
-        System.out.println(" I am agent that resolve nonograms with direct variant  >>> " + this.getLocalName());
+        System.out.println(" I am agent that drive direct variant  >>> " + this.getLocalName());
         registerService();
         doWait(2000);
         SolveDirect rc1 = new SolveDirect();

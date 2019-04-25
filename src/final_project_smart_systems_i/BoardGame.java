@@ -22,6 +22,7 @@ public class BoardGame extends javax.swing.JFrame {
     private FileClass fileClass;
     private TextManagement textManagement;
     private ResolveIndirectVariant indirectVariant;
+   
 
     /**
      * Creates new form Main
@@ -136,7 +137,8 @@ public class BoardGame extends javax.swing.JFrame {
 
         fileClass = new FileClass();
         fileClass.readFile(file);
-
+        
+        
         jTextAreaBoard.setText(fileClass.getOutputRead());
 
 

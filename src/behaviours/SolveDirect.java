@@ -7,10 +7,15 @@ package behaviours;
 
 import final_project_smart_systems_i.FileClass;
 import final_project_smart_systems_i.ResolveDirectVariant;
-import final_project_smart_systems_i.ResolveIndirectVariant;
+import final_project_smart_systems_i.SolveRow;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.wrapper.ControllerException;
+import jade.wrapper.PlatformController;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,30 +25,71 @@ import javax.swing.JOptionPane;
 public class SolveDirect extends CyclicBehaviour{
     
     
-    FileClass fileClass;
-    ResolveDirectVariant resolve;
+    private ResolveDirectVariant resolve;
+    private int numAgentsToCreate;
+    ACLMessage reply;
+    String linesSolved="";
 
     @Override
     public void action() {
 
-        fileClass = new FileClass();
         ACLMessage msg = this.myAgent.receive();
         
-        ACLMessage reply = new ACLMessage(ACLMessage.REQUEST);
+        reply = new ACLMessage(ACLMessage.REQUEST);
         reply.addReceiver(new AID("ag1",AID.ISLOCALNAME));
         
         resolve = new ResolveDirectVariant();
 
         if (msg != null) {
              
-            resolve.createMatrixDirectVariant(msg.getContent());            
-            boolean solution =  resolve.resolveNonogram();
-            System.out.println(resolve.showMatrix());
-            reply.setContent(resolve.showMatrix());
-            JOptionPane.showMessageDialog(null,solution ? "The nonogram on direct variant was resolve." : "The nonogram on direct variant was resolve.");            
+            numAgentsToCreate = resolve.createMatrixDirectVariant(msg.getContent()).length;
             
+            createAgentsByLineNonogram();
+            resolve.resolve(msg.getContent());
+//          boolean solution =  resolve.resolveNonogram();
+//          System.out.println(resolve.showMatrix());
+//          reply.setContent(resolve.showMatrix());
+            
+            JOptionPane.showMessageDialog(null,"The nonogram on direct variant was resolve.");            
+            reply.setContent("");
             myAgent.send(reply);
         }
     }
+
+    private void createAgentsByLineNonogram() {
+        
+        //AGENTS FOR SOLVE ROWS
+        for (int i = 0; i < numAgentsToCreate; i++) {
+            
+            String nameAgentToCreate = "SolverLineAgent" + i;
+        
+            PlatformController container = myAgent.getContainerController();
+
+            try {
+                
+                container.createNewAgent(nameAgentToCreate, "agents.SolverLineAgentNonogram", null).start();
+                System.out.println("Agent created");
+                
+                ACLMessage line = new ACLMessage(ACLMessage.REQUEST);
+                line.addReceiver(new AID("SolverLineAgent" + i,AID.ISLOCALNAME));
+                
+                //int rowIndex, int N, List<Integer> constraints
+                
+                line.setContent("hi");
+                myAgent.send(line);
+                
+                String solvedLine = myAgent.blockingReceive().getContent();
+                linesSolved += solvedLine+"\n";
+                
+                
+                
+            } catch (ControllerException e) {
+
+                Logger.getLogger(SolveDirect.class.getName()).log(Level.SEVERE,null,e);
+            }
+            
+        }       
+            
+    }   
     
 }
