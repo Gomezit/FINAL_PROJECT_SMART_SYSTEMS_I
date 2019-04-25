@@ -38,17 +38,16 @@ public class ResolveDirectVariant {
     }
     
    
-    public void resolve(String text){
+    public String resolve(String text){
         
-       
-        
+        String separator="-";
+        String str = "";
         String[] constrains = text.split("\n");
         
-        for (int i = 0; constrains.length < 10; i++) {
+        for (int i = 0; i < constrains.length; i++) {
             
             
             lines.add(constrains[i]);
-            System.out.println("OOO" + constrains[i]);
         }
         
         int N = lines.size() / 2;
@@ -56,7 +55,7 @@ public class ResolveDirectVariant {
         
         for (int i = 0; i < N; i++) {
             String line = lines.get(i);
-            String parts[] = line.split("-");
+            String parts[] = line.split(separator);
             List<Integer> constraints = new ArrayList<>();
             for (int j = 0; j < parts.length; j++) {
                 constraints.add(Integer.parseInt(parts[j]));
@@ -66,7 +65,7 @@ public class ResolveDirectVariant {
         
         for (int i = N; i < lines.size(); i++) {
             String line = lines.get(i);
-            String parts[] = line.split("-");
+            String parts[] = line.split(separator);
             List<Integer> constraints = new ArrayList<>();
             for (int j = 0; j < parts.length; j++) {
                 constraints.add(Integer.parseInt(parts[j]));
@@ -76,15 +75,18 @@ public class ResolveDirectVariant {
     
             
             SolveNonogram solve = new SolveNonogram(N, columnConstraints, rowConstraints);
-            System.out.println("Num de soluciones encontradas: " + solve.solutions.size());
+            System.out.println("Number of solutions founds: " + solve.solutions.size());
 
             for (int i = 0; i < solve.solutions.size(); i++) {
                 for (String s : solve.solutions.get(i)) {
                     System.out.println(s);
+                    str += s + "\n";
                 }
                 System.out.println("-------------------------------------");
             }
-        }
+            
+        return str;
+    }
         
        
     

@@ -45,14 +45,15 @@ public class SolveDirect extends CyclicBehaviour{
             numAgentsToCreate = resolve.createMatrixDirectVariant(msg.getContent()).length;
             
             createAgentsByLineNonogram();
-            resolve.resolve(msg.getContent());
+            
 //          boolean solution =  resolve.resolveNonogram();
 //          System.out.println(resolve.showMatrix());
-//          reply.setContent(resolve.showMatrix());
+            reply.setContent(resolve.resolve(msg.getContent()));
+            myAgent.send(reply);
             
             JOptionPane.showMessageDialog(null,"The nonogram on direct variant was resolve.");            
-            reply.setContent("");
-            myAgent.send(reply);
+            
+            
         }
     }
 
